@@ -29,7 +29,9 @@ jobs:
           rustup component add rustfmt
 
       - name: Install APT packages
-        run: sudo apt update -qq; sudo apt install nasm gdb qemu-system-x86 libc6-dev-i386
+        run: |
+          sudo-get apt update -y
+          sudo apt-get install nasm gdb qemu-system-x86 libc6-dev-i386 -y
 
       - name: Build all-debug
         run: make all-debug
@@ -108,6 +110,8 @@ jobs:
             build/*.js
             build/*.js.map
             build/*.wasm
+            !build/libwabt.js
+            !build/dummy_output.wasm 
 
   upload:
     name: Upload release
